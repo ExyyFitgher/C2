@@ -1,0 +1,58 @@
+appId: com.c2panel.app
+productName: C2 Panel
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - electron/**/*
+  - package.json
+  - "!node_modules/**/*"
+  - "node_modules/better-sqlite3/**/*"
+
+extraResources:
+  - from: dist
+    to: dist
+  - from: client/public/favicon.png
+    to: favicon.png
+
+asarUnpack:
+  - dist/**/*
+  - node_modules/better-sqlite3/**/*
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  icon: build/icon.ico
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: C2 Panel
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+
+portable:
+  artifactName: ${productName}-Portable-${version}.${ext}
+
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: client/public/favicon.png
+  category: Utility
+
+mac:
+  target:
+    - dmg
+  icon: client/public/favicon.png
+  category: public.app-category.utilities
